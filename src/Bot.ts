@@ -1,14 +1,14 @@
-import { Client } from "discord.js";
-import ready from "./listeners/ready"
+import { Client, Events, GatewayIntentBits } from "discord.js";
 import token from "./config.json";
 
 console.log("Bot is starting...");
 
 const client = new Client({
-	intents: []
+	intents: [GatewayIntentBits.Guilds]
 });
 
-ready(client);
-client.login(token.token);
+client.once(Events.ClientReady, c => {
+	console.log(`Ready! Logged in as ${c.user.tag}`);
+});
 
-console.log(client);
+client.login(token.token);
